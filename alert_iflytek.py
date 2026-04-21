@@ -10,12 +10,13 @@ git push
 
 open https://github.com/AnnaMai1016/Quant/actions
 左边点「科大讯飞价格预警」
-右边点 Run workflow → Run workflow（绿色按钮）
+右边点 Run workflow → Run workflow
 
-wcaa ppmg ejuw yptq
-kjni djbi leiy fraa
+wcaa ppmg ejuw yptq  # google pass
+kjni djbi leiy fraa  # google pass
 
-定时：crontab -e  加入  # 本地
+# 本地
+crontab -e # 然后写
 TZ=Asia/Shanghai
 0 16 * * 1-5 /opt/anaconda3/envs/qts/bin/python /Users/litingmai/Desktop/AQuant/QuantifyA/alert_iflytek.py >> /tmp/alert_iflytek.log 2>&1
 """
@@ -29,7 +30,7 @@ from datetime import datetime
 # ── 配置区 ────────────────────────────────────────────────────────────────
 TS_TOKEN    = '751c24755913f41ceb47461453aafde3a1e0e3e038ec11f6faa2efdf'
 STOCK_CODE  = '002230.SZ'   # 科大讯飞
-THRESHOLD   = 48.0           # 触发价格（元）
+THRESHOLD   = 50.0           # 触发价格（元）
 
 SMTP_HOST   = 'smtp.gmail.com'
 SMTP_PORT   = 587
