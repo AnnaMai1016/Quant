@@ -1,0 +1,28 @@
+name: 科大讯飞价格预警
+
+on:
+  schedule:
+    - cron: '0 8 * * 1-5'   # UTC 08:00 = 北京时间 16:00，周一到周五
+  workflow_dispatch:          # 允许手动触发（用于测试）
+
+jobs:
+  alert:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install tushare
+
+      - name: Run alert script
+        env:
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+        run: python alert_iflytek.py
