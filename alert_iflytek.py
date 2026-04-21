@@ -3,9 +3,17 @@
 每天运行一次，收盘价 > 50 元时发送邮件通知。
 用法：python alert_iflytek.py
 # 用github
+cd /Users/litingmai/Desktop/AQuant/QuantifyA
 git add alert_iflytek.py
 git commit -m "lower alert threshold to 48"
 git push
+
+open https://github.com/AnnaMai1016/Quant/actions
+左边点「科大讯飞价格预警」
+右边点 Run workflow → Run workflow（绿色按钮）
+
+wcaa ppmg ejuw yptq
+kjni djbi leiy fraa
 
 定时：crontab -e  加入  # 本地
 TZ=Asia/Shanghai
@@ -27,20 +35,18 @@ SMTP_HOST   = 'smtp.gmail.com'
 SMTP_PORT   = 587
 EMAIL_FROM  = os.environ['EMAIL_FROM']   # GitHub Secret: EMAIL_FROM
 EMAIL_PASS  = os.environ['EMAIL_PASS']   # GitHub Secret: EMAIL_PASS
-EMAIL_TO    = 'mlt17071348@gmail.com'
+EMAIL_TO    = 'litingm2@illinois.edu'
 # ─────────────────────────────────────────────────────────────────────────
 
 
-def get_latest_price(token: str, ts_code: str) -> tuple[float, str]:
-    """从 tushare 获取最新收盘价，返回 (price, trade_date)"""
+def get_latest_price(token: str, ts_code: str) -> tuple[float, float, float, float, str]:
+    """从 tushare 获取最新日线数据，返回 (open, high, low, close, trade_date)"""
     pro = ts.pro_api(token)
     df  = pro.daily(ts_code=ts_code, limit=1)
     if df.empty:
         raise RuntimeError(f'tushare 未返回数据：{ts_code}')
-    row   = df.iloc[0]
-    price = float(row['close'])
-    date  = str(row['trade_date'])
-    return price, date
+    row = df.iloc[0]
+    return float(row['open']), float(row['high']), float(row['low']), float(row['close']), str(row['trade_date'])
 
 
 def send_email(subject: str, body: str) -> None:
@@ -57,17 +63,20 @@ def send_email(subject: str, body: str) -> None:
 
 
 def main():
-    now   = datetime.now().strftime('%Y-%m-%d %H:%M')
-    price, trade_date = get_latest_price(TS_TOKEN, STOCK_CODE)
+    now = datetime.now().strftime('%Y-%m-%d %H:%M')
+    open_, high, low, close, trade_date = get_latest_price(TS_TOKEN, STOCK_CODE)
 
-    print(f'[{now}] {STOCK_CODE} 收盘价 = {price:.2f}  交易日 = {trade_date}')
+    print(f'[{now}] {STOCK_CODE}  开={open_:.2f}  高={high:.2f}  低={low:.2f}  收={close:.2f}  日期={trade_date}')
 
-    if price > THRESHOLD:
-        subject = f'【价格预警】科大讯飞 {price:.2f} 元 > {THRESHOLD} 元'
+    if close > THRESHOLD:
+        subject = f'【价格预警】科大讯飞 {close:.2f} 元 > {THRESHOLD} 元'
         body    = (
             f'科大讯飞（{STOCK_CODE}）价格预警\n\n'
             f'交易日期：{trade_date}\n'
-            f'收盘价格：{price:.2f} 元\n'
+            f'开盘价格：{open_:.2f} 元\n'
+            f'最高价格：{high:.2f} 元\n'
+            f'最低价格：{low:.2f} 元\n'
+            f'收盘价格：{close:.2f} 元\n'
             f'触发阈值：{THRESHOLD} 元\n\n'
             f'预警时间：{now}'
         )
