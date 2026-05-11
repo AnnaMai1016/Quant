@@ -1,6 +1,6 @@
 # Quant
-yeah
 
 git add .
 git commit -m "update"
-git push
+git push origin main
+
