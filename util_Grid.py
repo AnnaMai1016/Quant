@@ -32,22 +32,16 @@ def buy_partial(state: dict, price: float, size: float, row_time: pd.Timestamp, 
 
 
 def sell_partial(state: dict, price: float, size: float, row_time: pd.Timestamp, fee: float = 0.0) -> None:
-    if size <= 0:
+    if size <= 0 or state["position"] <= 0:
         return
-    if state["position"] <= 0:
-        return
-
     size = min(size, state["position"])
     proceeds = price * size
     trade_fee = proceeds * fee
-
     state["cash"] += (proceeds - trade_fee)
     state["position"] -= size
-
     if state["position"] <= 1e-12:
         state["position"] = 0.0
         state["avg_price"] = np.nan
-
     state["trades"] += 1
     state["fees_paid"] += trade_fee
     
@@ -59,11 +53,19 @@ def add_tradelog(trade, ttype: str, layer:int, price: float, size:float, time:pd
         trade_time - sell/buy times in one day
         position - after trade
     '''
-    trade.append({"time": pd.to_datetime(time), "trade_time":trade_time, "anchor":anchor,
-                  "type": ttype, "layer":layer, 
-                    "price": price, "size": size, "fee": price*size*fee,
-                    "next_buy": next_buy, "next_sell": next_sell,
-                    "position_after": position})
+    trade.append({
+    "time": pd.to_datetime(time),
+    "trade_time": trade_time,
+    "anchor": anchor,
+    "type": ttype,
+    "layer": layer,
+    "price": price,
+    "size": size,
+    "fee": price * size * fee,
+    "next_buy": next_buy,
+    "next_sell": next_sell,
+    "position_after": position,
+})
     
 
 
