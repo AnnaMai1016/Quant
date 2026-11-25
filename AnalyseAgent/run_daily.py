@@ -69,6 +69,8 @@ def run_model(mcfg: dict, sheets: dict, market_rows: list, timeout: int) -> dict
             except (LLMError, ValueError, KeyError) as e:
                 rec = {"error": str(e)[:500]}
                 log.warning("%s attempt %d failed: %s", mcfg["name"], attempt, str(e)[:200])
+                if any(f"HTTP {c}" in str(e) for c in (400, 401, 402, 403, 404)):
+                    break  # bad key / no balance / unknown model: retrying won't help
             except Exception as e:  # network etc.
                 rec = {"error": f"{type(e).__name__}: {str(e)[:400]}"}
                 log.warning("%s attempt %d failed: %s", mcfg["name"], attempt, type(e).__name__)

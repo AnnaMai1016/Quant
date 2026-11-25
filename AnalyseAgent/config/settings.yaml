@@ -13,7 +13,7 @@ models:
     enabled: true
   - name: gemini
     provider: gemini             # needs GEMINI_API_KEY (Google AI Studio free tier)
-    model: gemini-2.5-flash      # change if Google renames/retires it
+    model: gemini-3.8-flash      # 2.5-flash was retired for new users (Google's 404 suggested this one)
     enabled: true
     min_interval_sec: 7          # stay under the free tier's requests-per-minute limit
 
