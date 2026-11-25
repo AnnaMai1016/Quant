@@ -1,0 +1,5 @@
+# Copy to Quant-history/config/watchlist.yaml (private) and edit there.
+tickers:
+  - NVDA
+  - AAPL
+  - MSFT

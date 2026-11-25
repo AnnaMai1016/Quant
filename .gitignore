@@ -25,3 +25,6 @@ credentials*.json
 
 # ── 大文件（>50MB，GitHub 会警告；plots/ 文件夹已包含同样内容）──
 Astock/Astocks/data_Secondary_industry/plots.zip
+
+# ── AnalyseAgent local test output ──
+AnalyseAgent/_local_history/

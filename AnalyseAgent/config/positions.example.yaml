@@ -1,0 +1,7 @@
+# Copy to Quant-history/config/positions.yaml (private) and edit by hand whenever you trade.
+# Every ticker here is analysed too (merged with watchlist.yaml).
+positions:
+  - ticker: NVDA
+    shares: 10
+    avg_cost: 120.00
+    note: trend-follower paper account

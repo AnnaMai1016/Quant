@@ -1,0 +1,37 @@
+# AnalyseAgent settings — committed to the PUBLIC repo, so NO secrets and NO holdings here.
+# Watchlist / positions live in the private Quant-history repo (config/watchlist.yaml, config/positions.yaml).
+
+# Models that run the daily dashboard. Week 1: all three side by side; later keep the best one(s).
+models:
+  - name: claude                 # label written to history CSV
+    provider: claude_code        # headless Claude Code, uses your Claude Pro subscription (CLAUDE_CODE_OAUTH_TOKEN)
+    model: opus                  # Claude Code alias: opus | sonnet | haiku
+    enabled: true
+  - name: deepseek
+    provider: deepseek           # needs DEEPSEEK_API_KEY
+    model: deepseek-chat
+    enabled: true
+  - name: gemini
+    provider: gemini             # needs GEMINI_API_KEY (Google AI Studio free tier)
+    model: gemini-2.5-flash      # change if Google renames/retires it
+    enabled: true
+    min_interval_sec: 7          # stay under the free tier's requests-per-minute limit
+
+# "House view" = your own trend_follower.py signal, recomputed on 30-min bars from yfinance.
+house_signal:
+  interval: 30m
+  period: 30d
+  win: 42
+  lb: 65
+  thr: 0.0005
+
+# Index / macro snapshot shown at the top of every report
+market_symbols:
+  SPY: S&P 500 ETF
+  QQQ: Nasdaq-100 ETF
+  IWM: Russell 2000 ETF
+  ^VIX: VIX
+  ^TNX: US 10Y yield (x10)
+
+news_per_ticker: 8
+llm_timeout_sec: 300
