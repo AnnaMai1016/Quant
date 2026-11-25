@@ -23,6 +23,7 @@ jobs:
 
       - name: Run alert script
         env:
+          TUSHARE_TOKEN: ${{ secrets.TUSHARE_TOKEN }}
           EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
-        run: python alert_iflytek.py
+        run: python Astock/alert_iflytek.py

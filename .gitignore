@@ -1,0 +1,27 @@
+# ── Python 缓存 ──
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# ── 系统 / 编辑器文件 ──
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# ── 密码 / 密钥（永远不要提交）──
+.env
+.env.*
+*.env
+secrets.*
+*_secret*
+*.key
+*.pem
+credentials*.json
+
+# ── Office 临时文件 ──
+~$*
+
+# ── 大文件（>50MB，GitHub 会警告；plots/ 文件夹已包含同样内容）──
+Astock/Astocks/data_Secondary_industry/plots.zip

@@ -1,5 +1,5 @@
 """
-科大讯飞（002230.SZ）价格预警
+股票追踪 - 价格预警
 每天运行一次，收盘价 > 50 元时发送邮件通知。
 用法：python alert_iflytek.py
 # 用github
@@ -12,15 +12,12 @@ open https://github.com/AnnaMai1016/Quant/actions
 左边点「科大讯飞价格预警」
 右边点 Run workflow → Run workflow
 
-wcaa ppmg ejuw yptq  # google pass
-kjni djbi leiy fraa  # google pass
 
 # 本地
 crontab -e # 然后写
 TZ=Asia/Shanghai
 0 16 * * 1-5 /opt/anaconda3/envs/qts/bin/python /Users/litingmai/Desktop/AQuant/QuantifyA/alert_iflytek.py >> /tmp/alert_iflytek.log 2>&1
 """
-
 import os
 import tushare as ts
 import smtplib
@@ -28,7 +25,12 @@ from email.mime.text import MIMEText
 from datetime import datetime
 
 # ── 配置区 ────────────────────────────────────────────────────────────────
-TS_TOKEN    = '751c24755913f41ceb47461453aafde3a1e0e3e038ec11f6faa2efdf'
+'''=====to be finished=====
+跟踪一些股票，要求：基本面好
+执行：换手率够高、价格在低点、关注MACD、关注长短期线、浅看BB
+
+'''
+TS_TOKEN    = os.environ['TUSHARE_TOKEN']   # GitHub Secret / 本地环境变量: TUSHARE_TOKEN
 # 蓝筹股
 stock_names = [
     # 科技

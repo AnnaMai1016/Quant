@@ -12,8 +12,6 @@ open https://github.com/AnnaMai1016/Quant/actions
 左边点「科大讯飞价格预警」
 右边点 Run workflow → Run workflow
 
-wcaa ppmg ejuw yptq  # google pass
-kjni djbi leiy fraa  # google pass
 
 # 本地
 crontab -e # 然后写
@@ -28,7 +26,7 @@ from email.mime.text import MIMEText
 from datetime import datetime
 
 # ── 配置区 ────────────────────────────────────────────────────────────────
-TS_TOKEN    = '751c24755913f41ceb47461453aafde3a1e0e3e038ec11f6faa2efdf'
+TS_TOKEN    = os.environ['TUSHARE_TOKEN']   # GitHub Secret / 本地环境变量: TUSHARE_TOKEN
 STOCK_CODE  = '002230.SZ'   # 科大讯飞
 THRESHOLD   = 50.0           # 触发价格（元）
 
